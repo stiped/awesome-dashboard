@@ -1,11 +1,11 @@
 # awesome-dashboard
 
-Et awesome dashboard
+Et awesome dashboard!
 
-##Bygg
+## Bygg
 mvn clean install
 
-##Konfigurasjon
+## Konfigurasjon
 
 ### dashboard.properties
 
@@ -14,8 +14,10 @@ Denne fila må inneholde:
 * jenkins.username=brukernavn
 * jenkins.password=passord
 
-##Start
+## Start
 java -jar filnavn.jar -Ddashboard.properties=/path/to/dashboard.properties
+
+Starter applikasjon på http://localhost:8080
 
 ## API
 ### Jenkins
@@ -24,9 +26,12 @@ java -jar filnavn.jar -Ddashboard.properties=/path/to/dashboard.properties
 ### JIRA
 * 
 
-##Backlog
+## Backlog
 * Dokumentere API
 * ~~Jenkins-integrasjon~~
-* JIRA-integrasjon
-* GITLAB
+* JIRA-integrasjon / widget
+* GITLAB-integrasjon / widget
+* SONAR-integrasjon / widget
+* Jerre.no-integrasjon/kaffe-widget ? :D
 * Logging
+* Frontend
