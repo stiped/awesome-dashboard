@@ -1,7 +1,7 @@
-package awesome.dashboard.jenkins;
+package awesome.dashboard.jira;
 
 import awesome.dashboard.PropertiesService;
-import awesome.dashboard.jenkins.data.Jenkins;
+import awesome.dashboard.jira.data.JiraSprint;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -16,16 +16,16 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.URI;
 
-public class JenkinsService {
+public class JiraService {
 
-    public Jenkins hentOversikt(String jobbnavn) {
-        URI uri = URI.create(String.format("%s/job/%s/api/json?depth=1", PropertiesService.get("jenkins.baseUrl"), jobbnavn));
+    public JiraSprint hentOversikt(Integer sprintId) {
+        URI uri = URI.create(String.format("%s/rest/agile/1.0/sprint/%s", PropertiesService.get("jira.baseUrl"), sprintId));
         HttpHost httpHost = new HttpHost(uri.getHost(), uri.getPort(), uri.getScheme());
         BasicCredentialsProvider credsProvider = new BasicCredentialsProvider();
-        credsProvider.setCredentials(new AuthScope(uri.getHost(), uri.getPort()), new UsernamePasswordCredentials(PropertiesService.get("jenkins.username"), PropertiesService.get("jenkins.password")));
+        credsProvider.setCredentials(new AuthScope(uri.getHost(), uri.getPort()), new UsernamePasswordCredentials(PropertiesService.get("jira.username"), PropertiesService.get("jira.password")));
 
         CloseableHttpClient httpClient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
         HttpGet httpGet = new HttpGet(uri);
@@ -38,11 +38,9 @@ public class JenkinsService {
 
         try {
             CloseableHttpResponse response = httpClient.execute(httpHost, httpGet, localContext);
-            return JenkinsResponseMapper.mapTilJenkins(new ObjectMapper().readTree(EntityUtils.toString(response.getEntity())));
+            return JiraResponseMapper.mapTilJiraSprint(new ObjectMapper().readTree(EntityUtils.toString(response.getEntity())));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
-
 }
