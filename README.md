@@ -11,10 +11,12 @@ mvn clean install
 
 Denne fila må inneholde:
 
+#### Jenkins
 * jenkins.baseUrl=baseUrl til Jenkins
 * jenkins.username=brukernavn
 * jenkins.password=passord
 
+#### Jira
 * jira.baseUrl=baseUrl til Jira
 * jira.username=brukernavn
 * jira.password=passord
