@@ -21,8 +21,20 @@ import java.net.URI;
 
 public class JiraService {
 
-    public JiraSprint hentOversikt(Integer sprintId) {
-        URI uri = URI.create(String.format("%s/rest/agile/1.0/sprint/%s", PropertiesService.get("jira.baseUrl"), sprintId));
+    public static String STORYPOINT_FIELD;
+
+    public JiraService() {
+        STORYPOINT_FIELD = PropertiesService.get("jira.issue.field.storypoint");
+    }
+
+    public JiraSprint hentOversikt() {
+        URI uri = URI.create(
+                String.format("%s/rest/agile/1.0/sprint/%s/issue?maxResults=100&fields=%s",
+                        PropertiesService.get("jira.baseUrl"),
+                        PropertiesService.get("jira.sprint.id"),
+                        byggQueryFields()
+                )
+        );
         HttpHost httpHost = new HttpHost(uri.getHost(), uri.getPort(), uri.getScheme());
         BasicCredentialsProvider credsProvider = new BasicCredentialsProvider();
         credsProvider.setCredentials(new AuthScope(uri.getHost(), uri.getPort()), new UsernamePasswordCredentials(PropertiesService.get("jira.username"), PropertiesService.get("jira.password")));
@@ -42,5 +54,10 @@ public class JiraService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String byggQueryFields() {
+        String fields = "sprint,status,issuetype," + STORYPOINT_FIELD;
+        return fields;
     }
 }

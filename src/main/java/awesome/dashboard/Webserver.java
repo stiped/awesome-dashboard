@@ -15,7 +15,8 @@ public class Webserver {
     public static void main(String[] args) throws Exception {
 
         Configurator.currentConfig()
-                .level(Level.DEBUG)
+                .level(Level.WARNING) //Default-nivå
+                .level("awesome.dashboard", Level.DEBUG)
                 .writer(new ConsoleWriter(), "{date:dd-MM-yyyy HH:mm:ss} {level}\t{class} - {message}")
 //                .addWriter(new FileWriter("log.txt"), "{class}.{method}()\t{message}")
                 .activate();

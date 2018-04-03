@@ -20,6 +20,8 @@ Denne fila må inneholde:
 * jira.baseUrl=baseUrl til Jira
 * jira.username=brukernavn
 * jira.password=passord
+* jira.sprint.id=aktiv sprintID
+* jira.issue.field.storypoint=customfieldID for storypoint
 
 ## Start
 java -jar awesome-backend-0.1.jar -Ddashboard.properties=/path/to/dashboard.properties
@@ -31,8 +33,7 @@ Starter applikasjon på http://localhost:8080
 * /api/jenkins/{jobbnavn} 
 
 ### JIRA
-* /api/jira/sprint/aktiv
-* /api/jira/sprint/{sprintId}
+* /api/jira/sprint/oversikt
 
 ## Backlog
 * Dokumentere API
